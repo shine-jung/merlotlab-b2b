@@ -1,7 +1,8 @@
 # 메를로랩 (MerlotLab) 웹사이트
 
 > 에너지 절감의 시작 - EMS 솔루션 전문 기업 메를로랩의 공식 웹사이트
-
+- **웹사이트**: [https://www.merlotlab.com](https://www.merlotlab.com)
+  
 ## 📋 프로젝트 개요
 
 메를로랩은 IoT 기반 에너지 관리 시스템(EMS) 솔루션을 제공하는 기업입니다. 본 웹사이트는 사업장 유형별 맞춤형 에너지 절감 솔루션 소개, 도입 사례, 회사 정보, IR 정보 등을 제공합니다.
@@ -74,6 +75,18 @@ src/
 │   └── schemaTypes/         # 스키마 정의
 └── lib/                     # 유틸리티 함수
 ```
+
+## 🌐 배포 정보
+
+### Production Environment
+- **URL**: [https://www.merlotlab.com](https://www.merlotlab.com)
+- **CDN**: Vercel Edge Network (Global)
+- **SSL**: 자동 HTTPS (Let's Encrypt)
+- **Performance**: 
+  - Core Web Vitals 최적화
+  - Image Optimization (WebP, AVIF)
+  - Code Splitting & Lazy Loading
+
 
 ## 📊 주요 페이지
 
