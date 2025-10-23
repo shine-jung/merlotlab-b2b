@@ -7,6 +7,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useState, useEffect } from "react"
+import { track } from '@vercel/analytics'
 
 interface QuoteFormProps {
   selectedInquiry: "business" | "quote"
@@ -37,7 +38,7 @@ export default function QuoteForm({
   setSelectedBusinessType,
 }: QuoteFormProps) {
   const [formData, setFormData] = useState({
-    generalCount: "",
+    area: "",
     generalPower: "",
     generalHours: "",
     annualDays: "",
@@ -67,7 +68,7 @@ export default function QuoteForm({
 
   // 폼 유효성 검사 함수
   const isFormValid = () => {
-    return selectedBusinessType && formData.generalCount && formData.generalPower && formData.generalHours && formData.annualDays
+    return selectedBusinessType && formData.area && formData.generalPower && formData.generalHours && formData.annualDays
   }
 
   const businessTypeSavings = {
@@ -75,6 +76,13 @@ export default function QuoteForm({
     "제조 시설": 0.3,
     "아파트 주차장": 0.5,
     사무실: 0.3,
+  }
+
+  const businessTypeLightsPerSquareMeter = {
+    "물류 센터": 1/12.5, // 12.5m²당 1개 = 0.08개/m²
+    "제조 시설": 1/12.5, // 12.5m²당 1개 = 0.08개/m²
+    "아파트 주차장": 1/10.73, // 10.73m²당 1개 = 0.093개/m²
+    사무실: 1/9.5, // 9.5m²당 1개 = 0.105개/m²
   }
 
   const businessTypeElectricityRates = {
@@ -99,14 +107,16 @@ export default function QuoteForm({
     e.preventDefault()
     setIsSubmitted(true)
 
-    const { generalCount, generalPower, generalHours, annualDays } = formData
+    const { area, generalPower, generalHours, annualDays } = formData
 
     // 입력값 검증
-    if (!generalCount || !generalPower || !generalHours || !annualDays || !selectedBusinessType) {
+    if (!area || !generalPower || !generalHours || !annualDays || !selectedBusinessType) {
       return
     }
 
-    const count = Number.parseFloat(generalCount)
+    const areaValue = Number.parseFloat(area) // m²
+    const lightsPerSquareMeter = businessTypeLightsPerSquareMeter[selectedBusinessType as keyof typeof businessTypeLightsPerSquareMeter] ?? 1/12.5 // 사업장 유형별 면적당 조명개수
+    const count = areaValue * lightsPerSquareMeter // 총 조명개수
     const power = Number.parseFloat(generalPower)
     const hoursPerDay = Number.parseFloat(generalHours) // h/day
     const daysPerYear = Number.parseFloat(annualDays) // days
@@ -150,6 +160,21 @@ export default function QuoteForm({
       beforePowerConsumption,
       afterPowerConsumption,
       powerSavings,
+    })
+
+    // 견적 계산 이벤트 트래킹
+    track('Quote Calculated', {
+      businessType: selectedBusinessType,
+      area: areaValue,
+      lightCount: count,
+      powerPerLight: power,
+      hoursPerDay: hoursPerDay,
+      daysPerYear: daysPerYear,
+      beforeCost: Math.round(beforeCost),
+      afterCost: Math.round(afterCost),
+      savings: Math.round(savings),
+      savingsRate: Math.round(savingsRate * 100),
+      electricityRate: rate,
     })
   }
 
@@ -246,23 +271,24 @@ export default function QuoteForm({
 
           {/* 1. 조명 정보 입력 */}
           <div className="space-y-4 sm:space-y-6">
-            <h2 className="text-lg sm:text-xl font-bold text-gray-700">1. 조명 정보 입력</h2>
+            <h2 className="text-lg sm:text-xl font-bold text-gray-700">1. 사업장 정보 입력</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
               <div className="space-y-2">
-                <Label htmlFor="general-count" className="text-sm font-medium text-gray-700">
-                  조명 개수 <span className="text-red-500">*</span>
+                <Label htmlFor="area" className="text-sm font-medium text-gray-700">
+                  면적 (m²) <span className="text-red-500">*</span>
                 </Label>
                 <Input
-                  id="general-count"
-                  placeholder="ex) 50"
-                  value={formData.generalCount}
-                  onChange={(e) => handleInputChange("generalCount", e.target.value)}
+                  id="area"
+                  placeholder="ex) 100"
+                  value={formData.area}
+                  onChange={(e) => handleInputChange("area", e.target.value)}
                   className={`h-10 sm:h-12 border-2 rounded-xl focus:ring-0 ${
-                    isSubmitted && !formData.generalCount ? "border-red-300 focus:border-red-500" : "border-gray-200 focus:border-[#583CF2]"
+                    isSubmitted && !formData.area ? "border-red-300 focus:border-red-500" : "border-gray-200 focus:border-[#583CF2]"
                   }`}
                 />
-                {isSubmitted && !formData.generalCount && (
-                  <p className="text-xs text-red-500">조명 개수를 입력해주세요</p>
+                
+                {isSubmitted && !formData.area && (
+                  <p className="text-xs text-red-500">면적을 입력해주세요</p>
                 )}
               </div>
               <div className="space-y-2">
@@ -439,6 +465,14 @@ export default function QuoteForm({
                       <span className="font-medium text-[#583CF2]">{selectedBusinessType || "아파트 주차장"}</span>
                     </div>
                     <div className="flex justify-between items-center py-2">
+                      <span className="text-gray-600">면적</span>
+                      <span className="font-medium text-gray-900">{formData.area}m²</span>
+                    </div>
+                    <div className="flex justify-between items-center py-2">
+                      <span className="text-gray-600">총 조명 개수</span>
+                      <span className="font-medium text-gray-900">{formatCurrency(Number.parseFloat(formData.area) * (businessTypeLightsPerSquareMeter[selectedBusinessType as keyof typeof businessTypeLightsPerSquareMeter] ?? 1/12.5))}개</span>
+                    </div>
+                    <div className="flex justify-between items-center py-2">
                       <span className="text-gray-600">전기 요금 단가</span>
                       <span className="font-medium text-gray-900">{calculationResult.electricityRate}원/kWh</span>
                     </div>
@@ -456,7 +490,20 @@ export default function QuoteForm({
             <div className="mt-8">
               <Button
                 type="button"
-                onClick={() => setSelectedInquiry("business")}
+                onClick={() => {
+                  // 견적 문의 이벤트 트래킹
+                  track('Quote Inquiry Requested', {
+                    businessType: selectedBusinessType,
+                    area: Number.parseFloat(formData.area),
+                    lightCount: Number.parseFloat(formData.area) * (businessTypeLightsPerSquareMeter[selectedBusinessType as keyof typeof businessTypeLightsPerSquareMeter] ?? 1/12.5),
+                    powerPerLight: Number.parseFloat(formData.generalPower),
+                    hoursPerDay: Number.parseFloat(formData.generalHours),
+                    daysPerYear: Number.parseFloat(formData.annualDays),
+                    calculatedSavings: calculationResult?.savings,
+                    calculatedSavingsRate: calculationResult?.savingsRate,
+                  })
+                  setSelectedInquiry("business")
+                }}
                 className="w-full bg-[#583CF2] hover:bg-[#583CF2]/90 h-12 rounded-xl text-base font-semibold transition-all duration-300"
               >
                 정확한 견적 문의하기
