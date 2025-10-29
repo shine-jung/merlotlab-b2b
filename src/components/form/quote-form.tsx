@@ -39,7 +39,6 @@ export default function QuoteForm({
 }: QuoteFormProps) {
   const [formData, setFormData] = useState({
     area: "",
-    generalPower: "",
     generalHours: "",
     annualDays: "",
   })
@@ -53,8 +52,24 @@ export default function QuoteForm({
     "아파트 주차장": "레이스웨이",
   }
 
+  // 기존 조명 전력 (W)
+  const beforeLightPower = {
+    "물류 센터": 150,
+    "제조 시설": 150,
+    사무실: 50,
+    "아파트 주차장": 40,
+  }
+
+  // 교체 후 조명 전력 (W)
+  const afterLightPower = {
+    "물류 센터": 100,
+    "제조 시설": 100,
+    사무실: 40,
+    "아파트 주차장": 30,
+  }
+
   const [selectedLightType, setSelectedLightType] = useState(
-    businessTypeLightMapping[selectedBusinessType as keyof typeof businessTypeLightMapping] || "레이스웨이",
+    businessTypeLightMapping[selectedBusinessType as keyof typeof businessTypeLightMapping] || "투광등",
   )
 
   const [calculationResult, setCalculationResult] = useState<CalculationResult | null>(null)
@@ -62,13 +77,13 @@ export default function QuoteForm({
   // selectedBusinessType이 변경될 때 selectedLightType도 자동 업데이트
   useEffect(() => {
     if (selectedBusinessType) {
-      setSelectedLightType(businessTypeLightMapping[selectedBusinessType as keyof typeof businessTypeLightMapping] || "레이스웨이")
+      setSelectedLightType(businessTypeLightMapping[selectedBusinessType as keyof typeof businessTypeLightMapping] || "투광등")
     }
   }, [selectedBusinessType])
 
   // 폼 유효성 검사 함수
   const isFormValid = () => {
-    return selectedBusinessType && formData.area && formData.generalPower && formData.generalHours && formData.annualDays
+    return selectedBusinessType && formData.area && formData.generalHours && formData.annualDays
   }
 
   const businessTypeSavings = {
@@ -79,10 +94,10 @@ export default function QuoteForm({
   }
 
   const businessTypeLightsPerSquareMeter = {
-    "물류 센터": 1/12.5, // 12.5m²당 1개 = 0.08개/m²
-    "제조 시설": 1/12.5, // 12.5m²당 1개 = 0.08개/m²
+    "물류 센터": 1/25.92, // 25.92m²당 1개 = 0.039개/m²
+    "제조 시설": 1/12.43, // 12.43m²당 1개 = 0.08개/m²
     "아파트 주차장": 1/10.73, // 10.73m²당 1개 = 0.093개/m²
-    사무실: 1/9.5, // 9.5m²당 1개 = 0.105개/m²
+    사무실: 1/9.6, // 9.6m²당 1개 = 0.104개/m²
   }
 
   const businessTypeElectricityRates = {
@@ -107,23 +122,23 @@ export default function QuoteForm({
     e.preventDefault()
     setIsSubmitted(true)
 
-    const { area, generalPower, generalHours, annualDays } = formData
+    const { area, generalHours, annualDays } = formData
 
     // 입력값 검증
-    if (!area || !generalPower || !generalHours || !annualDays || !selectedBusinessType) {
+    if (!area || !generalHours || !annualDays || !selectedBusinessType) {
       return
     }
 
     const areaValue = Number.parseFloat(area) // m²
     const lightsPerSquareMeter = businessTypeLightsPerSquareMeter[selectedBusinessType as keyof typeof businessTypeLightsPerSquareMeter] ?? 1/12.5 // 사업장 유형별 면적당 조명개수
     const count = areaValue * lightsPerSquareMeter // 총 조명개수
-    const power = Number.parseFloat(generalPower)
+    const power = beforeLightPower[selectedBusinessType as keyof typeof beforeLightPower] ?? 150 // 기존 조명 전력
     const hoursPerDay = Number.parseFloat(generalHours) // h/day
     const daysPerYear = Number.parseFloat(annualDays) // days
 
-    // 조명 일일 사용 시간 8시간 미만 제한
+    // 일일 사용 시간 8시간 미만 제한
     if (hoursPerDay < 8) {
-      alert("조명 일일 사용 시간은 8시간 이상이어야 합니다.")
+      alert("일일 사용 시간은 8시간 이상이어야 합니다.")
       return
     }
 
@@ -208,7 +223,7 @@ export default function QuoteForm({
                   }`}
                   onClick={() => {
                     setSelectedInquiry("quote")
-                    setSelectedBusinessType("아파트 주차장")
+                    setSelectedBusinessType("제조 시설")
                   }}
                 >
                   <div className="space-y-2">
@@ -247,7 +262,7 @@ export default function QuoteForm({
               사업장 유형 <span className="text-red-500">*</span>
             </Label>
             <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-              {["아파트 주차장", "사무실", "물류 센터", "제조 시설"].map((type) => (
+              {["제조 시설", "사무실", "물류 센터", "아파트 주차장"].map((type) => (
                 <div
                   key={type}
                   onClick={() => {
@@ -291,23 +306,6 @@ export default function QuoteForm({
                   <p className="text-xs text-red-500">면적을 입력해주세요</p>
                 )}
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="general-power" className="text-sm font-medium text-gray-700">
-                  조명 평균 소비 전력 (W) <span className="text-red-500">*</span>
-                </Label>
-                <Input
-                  id="general-power"
-                  placeholder="ex) 40"
-                  value={formData.generalPower}
-                  onChange={(e) => handleInputChange("generalPower", e.target.value)}
-                  className={`h-10 sm:h-12 border-2 rounded-xl focus:ring-0 ${
-                    isSubmitted && !formData.generalPower ? "border-red-300 focus:border-red-500" : "border-gray-200 focus:border-[#583CF2]"
-                  }`}
-                />
-                {isSubmitted && !formData.generalPower && (
-                  <p className="text-xs text-red-500">평균 소비 전력을 입력해주세요</p>
-                )}
-              </div>
             </div>
           </div>
 
@@ -317,7 +315,7 @@ export default function QuoteForm({
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
               <div className="space-y-2">
                 <Label htmlFor="general-hours" className="text-sm font-medium text-gray-700">
-                  조명 일일 사용 시간 (시간) <span className="text-red-500">*</span>
+                  일일 사용 시간 (시간) <span className="text-red-500">*</span>
                 </Label>
                 <Input
                   id="general-hours"
@@ -462,7 +460,7 @@ export default function QuoteForm({
                   <div className="space-y-3">
                     <div className="flex justify-between items-center py-2">
                       <span className="text-gray-600">사업장 유형</span>
-                      <span className="font-medium text-[#583CF2]">{selectedBusinessType || "아파트 주차장"}</span>
+                      <span className="font-medium text-[#583CF2]">{selectedBusinessType || "제조 시설"}</span>
                     </div>
                     <div className="flex justify-between items-center py-2">
                       <span className="text-gray-600">면적</span>
@@ -471,6 +469,14 @@ export default function QuoteForm({
                     <div className="flex justify-between items-center py-2">
                       <span className="text-gray-600">총 조명 개수</span>
                       <span className="font-medium text-gray-900">{formatCurrency(Number.parseFloat(formData.area) * (businessTypeLightsPerSquareMeter[selectedBusinessType as keyof typeof businessTypeLightsPerSquareMeter] ?? 1/12.5))}개</span>
+                    </div>
+                    <div className="flex justify-between items-center py-2">
+                      <span className="text-gray-600">기존 조명 전력</span>
+                      <span className="font-medium text-gray-900">{beforeLightPower[selectedBusinessType as keyof typeof beforeLightPower] ?? 150}W</span>
+                    </div>
+                    <div className="flex justify-between items-center py-2">
+                      <span className="text-gray-600">교체 후 조명 전력</span>
+                      <span className="font-medium text-gray-900">{afterLightPower[selectedBusinessType as keyof typeof afterLightPower] ?? 100}W</span>
                     </div>
                     <div className="flex justify-between items-center py-2">
                       <span className="text-gray-600">전기 요금 단가</span>
@@ -496,7 +502,7 @@ export default function QuoteForm({
                     businessType: selectedBusinessType,
                     area: Number.parseFloat(formData.area),
                     lightCount: Number.parseFloat(formData.area) * (businessTypeLightsPerSquareMeter[selectedBusinessType as keyof typeof businessTypeLightsPerSquareMeter] ?? 1/12.5),
-                    powerPerLight: Number.parseFloat(formData.generalPower),
+                    powerPerLight: beforeLightPower[selectedBusinessType as keyof typeof beforeLightPower] ?? 150,
                     hoursPerDay: Number.parseFloat(formData.generalHours),
                     daysPerYear: Number.parseFloat(formData.annualDays),
                     calculatedSavings: calculationResult?.savings,

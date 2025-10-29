@@ -57,14 +57,14 @@ function LandingPage() {
 
   // inquiry 타입에 따라 default 값을 초기화
   const [selectedBusinessType, setSelectedBusinessType] = useState<string>(
-    selectedInquiry === "business" ? "개인" : "아파트 주차장",
+    selectedInquiry === "business" ? "개인" : "제조 시설",
   )
 
   useEffect(() => {
     if (selectedInquiry === "business") {
       setSelectedBusinessType("개인")
     } else {
-      setSelectedBusinessType("아파트 주차장")
+      setSelectedBusinessType("제조 시설")
     }
   }, [selectedInquiry])
 
