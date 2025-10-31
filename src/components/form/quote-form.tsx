@@ -301,7 +301,7 @@ export default function QuoteForm({
                     isSubmitted && !formData.area ? "border-red-300 focus:border-red-500" : "border-gray-200 focus:border-[#583CF2]"
                   }`}
                 />
-                
+                <p className="text-xs text-gray-500">* 1평당 약 3.3m²</p>
                 {isSubmitted && !formData.area && (
                   <p className="text-xs text-red-500">면적을 입력해주세요</p>
                 )}
@@ -466,18 +466,18 @@ export default function QuoteForm({
                       <span className="text-gray-600">면적</span>
                       <span className="font-medium text-gray-900">{formData.area}m²</span>
                     </div>
-                    <div className="flex justify-between items-center py-2">
+                    {/* <div className="flex justify-between items-center py-2">
                       <span className="text-gray-600">총 조명 개수</span>
                       <span className="font-medium text-gray-900">{formatCurrency(Number.parseFloat(formData.area) * (businessTypeLightsPerSquareMeter[selectedBusinessType as keyof typeof businessTypeLightsPerSquareMeter] ?? 1/12.5))}개</span>
-                    </div>
-                    <div className="flex justify-between items-center py-2">
+                    </div> */}
+                    {/* <div className="flex justify-between items-center py-2">
                       <span className="text-gray-600">기존 조명 전력</span>
                       <span className="font-medium text-gray-900">{beforeLightPower[selectedBusinessType as keyof typeof beforeLightPower] ?? 150}W</span>
-                    </div>
-                    <div className="flex justify-between items-center py-2">
+                    </div> */}
+                    {/* <div className="flex justify-between items-center py-2">
                       <span className="text-gray-600">교체 후 조명 전력</span>
                       <span className="font-medium text-gray-900">{afterLightPower[selectedBusinessType as keyof typeof afterLightPower] ?? 100}W</span>
-                    </div>
+                    </div> */}
                     <div className="flex justify-between items-center py-2">
                       <span className="text-gray-600">전기 요금 단가</span>
                       <span className="font-medium text-gray-900">{calculationResult.electricityRate}원/kWh</span>
