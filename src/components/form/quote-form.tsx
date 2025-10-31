@@ -376,7 +376,7 @@ export default function QuoteForm({
             <div className="w-full">
               <div className="mb-8">
                 <h2 className="text-2xl font-bold text-gray-900 mb-2">견적 결과</h2>
-                <p className="text-gray-600">메를로 시스템으로 교체하면 이만큼 절약할 수 있어요</p>
+                <p className="text-gray-600">사업장 유형의 평균 수치를 바탕으로 계산된 예시 견적입니다</p>
               </div>
 
               {/* 절감 효과 */}
