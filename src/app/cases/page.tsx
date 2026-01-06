@@ -14,7 +14,7 @@ const stats = [
     label: "도입 사업장",
     value: 54,
     unit: "개소",
-    description: "23.01 ~ 25.07",
+    description: "23.01 ~ 25.12",
   },
   {
     label: "누적 설치량",
