@@ -12,13 +12,13 @@ import LogoCarouselMain from "@/components/carousel/logo-carousel-cases";
 const stats = [
   {
     label: "도입 사업장",
-    value: 54,
+    value: 65,
     unit: "개소",
     description: "23.01 ~ 25.12",
   },
   {
     label: "누적 설치량",
-    value: 86763,
+    value: 108986,
     unit: "개",
     description: "전환 시스템을 개수로 표기",
   },
