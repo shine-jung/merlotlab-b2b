@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import Statistics from "@/components/statistics/statistics"
-import PortfolioUseCases from "@/components/card/portfolio-use-cases"
-import FadeInUp from "@/components/animation/fade-in-up"
-import Header from "@/components/header"
-import Footer from "@/components/footer"
-import { Button } from "@/components/ui/button"
-import LogoCarouselMain from "@/components/carousel/logo-carousel-cases"
+import { useState } from "react";
+import Statistics from "@/components/statistics/statistics";
+import PortfolioUseCases from "@/components/card/portfolio-use-cases";
+import FadeInUp from "@/components/animation/fade-in-up";
+import Header from "@/components/header";
+import Footer from "@/components/footer";
+import { Button } from "@/components/ui/button";
+import LogoCarouselMain from "@/components/carousel/logo-carousel-cases";
 
 const stats = [
   {
@@ -30,11 +30,11 @@ const stats = [
   },
   {
     label: "사업장 전력량 절감 평균",
-    value: 49.5,
+    value: 50,
     unit: "%",
     description: "시스템 도입 후 절감된 평균 수치",
   },
-]
+];
 
 const filterTypes = [
   { label: "전체", value: "all" },
@@ -42,14 +42,14 @@ const filterTypes = [
   { label: "물류센터", value: "logistics_center" },
   { label: "주차장", value: "parking_lot" },
   { label: "사무실", value: "office" },
-]
+];
 
 export default function UseCases() {
-  const [activeFilter, setActiveFilter] = useState("all")
+  const [activeFilter, setActiveFilter] = useState("all");
 
   const handleFilterChange = (filterValue: string) => {
-    setActiveFilter(filterValue)
-  }
+    setActiveFilter(filterValue);
+  };
 
   return (
     <main className="min-h-screen">
@@ -62,54 +62,58 @@ export default function UseCases() {
 
         <div className="inner-container relative max-w-full mx-auto text-primary">
           <div className="py-4 sm:py-8">
-          {/* <h2 className="text-sm sm:text-base md:text-lg lg:text-xl">Customers</h2> */}
+            {/* <h2 className="text-sm sm:text-base md:text-lg lg:text-xl">Customers</h2> */}
           </div>
           <div className="text-center text-gray-700">
             <FadeInUp delay={300}>
-            <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight xs:leading-[1.2] sm:leading-[50px] md:leading-[60px]">
+              <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight xs:leading-[1.2] sm:leading-[50px] md:leading-[60px]">
                 메를로랩이 사업장 전력 절감
                 <FadeInUp delay={400}>
-                  <span className="text-primary block mt-0 sm:mt-3 md:mt-4 lg:mt-5 xl:mt-4">함께 하겠습니다</span>
+                  <span className="text-primary block mt-0 sm:mt-3 md:mt-4 lg:mt-5 xl:mt-4">
+                    함께 하겠습니다
+                  </span>
                 </FadeInUp>
               </h2>
             </FadeInUp>
-            <LogoCarouselMain /> 
+            <LogoCarouselMain />
           </div>
-          
-      <div className="inner-container relative max-w-[1300px] mx-auto">
-          <Statistics stats={stats} />
 
-          {/* 필터 섹션 */}
-          <FadeInUp delay={300} threshold={0.1}>
-            <div className="my-6 xs:my-8 sm:my-10 md:my-12">
-              <div className="flex flex-wrap justify-center gap-1.5 xs:gap-2 sm:gap-3 mb-4 xs:mb-6 sm:mb-8 px-2 xs:px-4">
-                {filterTypes.map((filter) => (
-                  <Button
-                    key={filter.value}
-                    variant={activeFilter === filter.value ? "default" : "outline"}
-                    onClick={() => handleFilterChange(filter.value)}
-                    className={`px-2.5 xs:px-3 sm:px-4 md:px-6 py-1 xs:py-1.5 sm:py-2 text-xs xs:text-sm sm:text-base rounded-full transition-all duration-200 whitespace-nowrap ${
-                      activeFilter === filter.value
-                        ? "bg-primary text-white hover:bg-primary/90"
-                        : "border-primary text-primary hover:bg-primary hover:text-white"
-                    }`}
-                  >
-                    {filter.label}
-                  </Button>
-                ))}
+          <div className="inner-container relative max-w-[1300px] mx-auto">
+            <Statistics stats={stats} />
+
+            {/* 필터 섹션 */}
+            <FadeInUp delay={300} threshold={0.1}>
+              <div className="my-6 xs:my-8 sm:my-10 md:my-12">
+                <div className="flex flex-wrap justify-center gap-1.5 xs:gap-2 sm:gap-3 mb-4 xs:mb-6 sm:mb-8 px-2 xs:px-4">
+                  {filterTypes.map((filter) => (
+                    <Button
+                      key={filter.value}
+                      variant={
+                        activeFilter === filter.value ? "default" : "outline"
+                      }
+                      onClick={() => handleFilterChange(filter.value)}
+                      className={`px-2.5 xs:px-3 sm:px-4 md:px-6 py-1 xs:py-1.5 sm:py-2 text-xs xs:text-sm sm:text-base rounded-full transition-all duration-200 whitespace-nowrap ${
+                        activeFilter === filter.value
+                          ? "bg-primary text-white hover:bg-primary/90"
+                          : "border-primary text-primary hover:bg-primary hover:text-white"
+                      }`}
+                    >
+                      {filter.label}
+                    </Button>
+                  ))}
+                </div>
               </div>
-            </div>
-          </FadeInUp>
+            </FadeInUp>
 
-          <FadeInUp delay={300} threshold={0.1}>
-            <PortfolioUseCases activeFilter={activeFilter} />
-          </FadeInUp>
+            <FadeInUp delay={300} threshold={0.1}>
+              <PortfolioUseCases activeFilter={activeFilter} />
+            </FadeInUp>
+          </div>
         </div>
-      </div>
       </section>
 
       {/* Footer */}
       <Footer />
     </main>
-  )
+  );
 }
