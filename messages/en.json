@@ -39,7 +39,8 @@
     "address": "#2002–2005, Daeryung Post Tower 5, 68 Digital-ro 9-gil, Geumcheon-gu, Seoul, Korea",
     "phone": "Tel : +82-2-862-1700",
     "businessNumber": "Business Reg. No. : 119-86-57418",
-    "copyright": "© Copyright merlot.lab All Rights Reserved."
+    "copyright": "© Copyright merlot.lab All Rights Reserved.",
+    "trademark": "CES® is a registered trademark of the Consumer Technology Association (CTA)®."
   },
   "about": {
     "heroEyebrow": "About MerlotLab",
@@ -691,7 +692,7 @@
     "stepsSubtitle": "Merlot RTLS leverages the Merlot Mesh lighting infrastructure installed for EMS.<br></br>Simply adding UWB anchors to the existing infrastructure builds an indoor location-tracking environment.",
     "step1Title": "Use EMS lighting infrastructure",
     "step1Desc": "Reuse the existing EMS lighting infrastructure as-is, with no separate wiring work.",
-    "step2Title": "Build the RTLS environment" ,
+    "step2Title": "Build the RTLS environment",
     "step2Desc": "Install anchors on the lighting and attach tags to people and assets to build the RTLS environment.",
     "step3Title": "Run location-based services",
     "step3Desc": "Provide site-tailored services based on real-time location data.",
@@ -836,5 +837,20 @@
   "contact": {
     "title": "Reach out anytime — we are here to help",
     "subtitle": "Feel free to ask us anything, anytime"
+  },
+  "cesAward": {
+    "barLabel": "NEWS",
+    "barTitle": "CES Innovation Awards® 2027 Honoree",
+    "barDesc": "Merlot Building DX Platform, Enterprise Tech",
+    "cta": "Learn more",
+    "newTab": "(opens in a new tab)",
+    "popupEyebrow": "CES Innovation Awards®",
+    "popupTitle": "2027 Honoree<br></br>Enterprise Tech",
+    "popupDesc": "Merlotlab’s <b>Merlot Building DX Platform</b> has been named a CES Innovation Awards® 2027 Honoree in Enterprise Tech.",
+    "badgeAlt": "CES Innovation Awards 2027 Honoree badge",
+    "hideToday": "Don’t show again today",
+    "close": "Close",
+    "closeBarAria": "Dismiss announcement",
+    "closePopupAria": "Close award notice"
   }
 }

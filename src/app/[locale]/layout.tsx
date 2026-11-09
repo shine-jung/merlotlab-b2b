@@ -10,6 +10,8 @@ import { routing } from "@/i18n/routing";
 import { SITE_URL, OG_LOCALE } from "@/config/site";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
+import CesAnnouncementBar from "@/components/ces-award/announcement-bar";
+import { cesBarInitScript } from "@/config/ces-award";
 import "../globals.css";
 
 const geistSans = Geist({
@@ -82,7 +84,7 @@ export default async function LocaleLayout({
   setRequestLocale(locale);
 
   return (
-    <html lang={locale}>
+    <html lang={locale} suppressHydrationWarning>
         <head>
         <meta
           name="google-site-verification"
@@ -92,10 +94,13 @@ export default async function LocaleLayout({
           name="naver-site-verification"
           content="a3ea98909496dc26ff2182b47e9aaf493e2c217a"
         />
+        {/* CES 배너: 만료/닫힘이면 hydration 전에 숨김 표시 (깜빡임·CLS 방지) */}
+        <script dangerouslySetInnerHTML={{ __html: cesBarInitScript }} />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <NextTopLoader color="#583CF2" height={3} showSpinner={false} shadow="0 0 10px #583CF2,0 0 5px #583CF2" />
         <NextIntlClientProvider>
+          <CesAnnouncementBar />
           <Header />
           {children}
           <Footer />
