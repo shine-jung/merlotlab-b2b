@@ -6,6 +6,11 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/* CES 상단 배너: 만료/닫힘 시 숨김 (src/config/ces-award.ts cesBarInitScript) */
+html[data-ces-bar="hidden"] .ces-bar {
+  display: none;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

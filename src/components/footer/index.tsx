@@ -54,6 +54,8 @@ const Footer: NextPage = () => {
         {/* 저작권 */}
         <div className="flex flex-col items-start justify-start text-xs sm:text-sm mt-4 sm:mt-6">
           <div className="relative leading-5">{t("copyright")}</div>
+          {/* CES 로고 가이드(2026) 준수: CES® 사용 시 CTA 상표 귀속 문구를 표기 영역에 기재 */}
+          <div className="relative leading-5 mt-1">{t("trademark")}</div>
         </div>
       </div>
     </div>
