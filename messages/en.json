@@ -41,7 +41,8 @@
     "phone": "Tel : +82-2-862-1700",
     "businessNumber": "Business Reg. No. : 119-86-57418",
     "copyright": "© Copyright merlot.lab All Rights Reserved.",
-    "trademark": "CES® is a registered trademark of the Consumer Technology Association (CTA)®."
+    "trademark": "CES® is a registered trademark of the Consumer Technology Association (CTA)®.",
+    "cesDisclaimer": "The CES Innovation Awards are based upon descriptive materials submitted to the judges. CTA did not verify the accuracy of any submission or of any claims made and did not test the item to which the award was given."
   },
   "about": {
     "heroEyebrow": "About MerlotLab",
@@ -843,10 +844,11 @@
     "barLabel": "NEWS",
     "barTitle": "CES Innovation Awards® 2027 Honoree",
     "barDesc": "Merlot Building DX Platform, Enterprise Tech",
+    "barProduct": "Merlot Building DX Platform",
     "cta": "Learn more",
     "newTab": "(opens in a new tab)",
     "popupEyebrow": "CES Innovation Awards®",
-    "popupTitle": "2027 Honoree<br></br>Enterprise Tech",
+    "popupTitle": "2027 Honoree<br></br>Enterprise Tech",
     "popupDesc": "Merlotlab’s <b>Merlot Building DX Platform</b> has been named a CES Innovation Awards<sup>®</sup> 2027 Honoree in Enterprise Tech.",
     "badgeAlt": "CES Innovation Awards 2027 Honoree badge",
     "hideToday": "Don’t show again today",

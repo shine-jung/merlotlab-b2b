@@ -138,9 +138,9 @@ export default function CesAwardPopup() {
           src={CES_AWARD.badgeSrc}
           alt={t("badgeAlt")}
           width={480}
-          height={600}
+          height={601}
           sizes="104px"
-          className="h-[100px] w-20 shrink-0 sm:h-[130px] sm:w-[104px]"
+          className="h-auto w-20 shrink-0 self-start sm:w-[104px]"
         />
         <div className="flex flex-col gap-1.5 pr-6 sm:gap-2 sm:pr-5">
           <p className="text-xs font-bold tracking-normal text-[#8FD3F4] sm:text-[13px]">

@@ -41,7 +41,8 @@
     "phone": "문의전화 : 02) 862-1700",
     "businessNumber": "사업장 등록번호 : 119-86-57418",
     "copyright": "© Copyright merlot.lab All Rights Reserved.",
-    "trademark": "CES®는 Consumer Technology Association(CTA)®의 등록 상표입니다."
+    "trademark": "CES®는 Consumer Technology Association(CTA)®의 등록 상표입니다.",
+    "cesDisclaimer": "The CES Innovation Awards are based upon descriptive materials submitted to the judges. CTA did not verify the accuracy of any submission or of any claims made and did not test the item to which the award was given."
   },
   "about": {
     "heroEyebrow": "About Merlotlab",
@@ -843,6 +844,7 @@
     "barLabel": "NEWS",
     "barTitle": "CES® 2027 혁신상 수상",
     "barDesc": "Merlot Building DX Platform, Enterprise Tech 부문 Honoree",
+    "barProduct": "Merlot Building DX Platform",
     "cta": "자세히 보기",
     "newTab": "(새 창에서 열림)",
     "popupEyebrow": "Enterprise Tech · Honoree",
