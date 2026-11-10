@@ -52,10 +52,12 @@ const Footer: NextPage = () => {
         <div className="w-full bg-zinc-300 h-px mt-8 sm:mt-12" />
 
         {/* 저작권 */}
-        <div className="flex flex-col items-start justify-start text-xs sm:text-sm mt-4 sm:mt-6">
+        <div className="flex flex-col items-start justify-start break-keep text-xs sm:text-sm mt-4 sm:mt-6">
           <div className="relative leading-5">{t("copyright")}</div>
           {/* CES 로고 가이드(2026) 준수: CES® 사용 시 CTA 상표 귀속 문구를 표기 영역에 기재 */}
           <div className="relative leading-5 mt-1">{t("trademark")}</div>
+          {/* CES Innovation Awards Honoree Guide 필수 문구: 웹사이트에서 수상 언급 시 원문(영문) 그대로 기재 */}
+          <div className="relative leading-5 mt-1">{t("cesDisclaimer")}</div>
         </div>
       </div>
     </div>
