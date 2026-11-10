@@ -11,14 +11,15 @@
   },
   "metadata": {
     "siteName": "MerlotLab",
-    "keywords": ["MerlotLab", "merlotlab", "EMS", "energy management", "case studies", "IR Center", "energy optimization", "smart building"],
+    "keywords": ["MerlotLab", "merlotlab", "smart building", "wireless mesh network", "EMS", "energy management", "RTLS", "indoor positioning", "case studies", "IR Center"],
     "titleDefault": "MerlotLab",
     "titleTemplate": "%s | MerlotLab",
-    "description": "EMS solutions · case studies · company · IR Center — from facility environment analysis to on-site optimized energy operations, we change the paradigm of savings.",
-    "ogTitle": "MerlotLab | EMS Solutions · Case Studies · IR Center",
-    "ogDescription": "From facility environment analysis to on-site optimized energy operations, we change the paradigm of savings.",
+    "description": "Build a wireless network across your entire building just by replacing the lights, and run everything from energy management (EMS) to indoor positioning (RTLS) on a single platform.",
+    "ogTitle": "MerlotLab | Smart Building Platform, Connected Through Lighting",
+    "ogDescription": "Build a wireless network across your entire building just by replacing the lights, and run everything from energy management (EMS) to indoor positioning (RTLS) on a single platform.",
     "homeTitle": "MerlotLab",
-    "homeDescription": "EMS solutions · case studies · company · IR Center — from facility environment analysis to on-site optimized energy operations, we change the paradigm of savings."
+    "homeDescription": "Build a wireless network across your entire building just by replacing the lights, and run everything from energy management (EMS) to indoor positioning (RTLS) on a single platform.",
+    "ogImageAlt": "MerlotLab — Smart building platform, connected through lighting"
   },
   "common": {
     "logoAlt": "MerlotLab logo",

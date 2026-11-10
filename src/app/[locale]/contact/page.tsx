@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
-import { SITE_URL } from "@/config/site"
+import { buildPageMetadata } from "@/lib/seo"
 import ContactInquiry from "../_sections/contact/inquiry"
 
 export async function generateMetadata({
@@ -10,16 +10,12 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: "contact" })
-  const koUrl = `${SITE_URL}/contact`
-  const enUrl = `${SITE_URL}/en/contact`
-  return {
+  return buildPageMetadata({
+    locale,
+    path: `/contact`,
     title: t("title"),
     description: t("subtitle"),
-    alternates: {
-      canonical: locale === "en" ? enUrl : koUrl,
-      languages: { ko: koUrl, en: enUrl },
-    },
-  }
+  })
 }
 
 export default function ContactPage() {

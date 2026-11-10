@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
-import { SITE_URL } from "@/config/site"
+import { buildPageMetadata } from "@/lib/seo"
 import TechHero from "../_sections/tech/hero"
 import TechVideo from "../_sections/tech/video"
 import TechAlgorithms from "../_sections/tech/algorithms"
@@ -13,16 +13,12 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: "tech" })
-  const koUrl = `${SITE_URL}/tech`
-  const enUrl = `${SITE_URL}/en/tech`
-  return {
+  return buildPageMetadata({
+    locale,
+    path: `/tech`,
     title: t("heroTitle"),
     description: t("heroSubtitle"),
-    alternates: {
-      canonical: locale === "en" ? enUrl : koUrl,
-      languages: { ko: koUrl, en: enUrl },
-    },
-  }
+  })
 }
 
 export default function TechPage() {

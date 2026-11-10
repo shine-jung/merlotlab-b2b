@@ -8,6 +8,7 @@ import { notFound } from "next/navigation";
 import NextTopLoader from "nextjs-toploader";
 import { routing } from "@/i18n/routing";
 import { SITE_URL, OG_LOCALE } from "@/config/site";
+import { OG_IMAGE_SIZE, ogImagePath } from "@/lib/seo";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import CesAnnouncementBar from "@/components/ces-award/announcement-bar";
@@ -52,14 +53,14 @@ export async function generateMetadata({
       siteName: t("siteName"),
       title: t("ogTitle"),
       description: t("ogDescription"),
-      images: [{ url: "/favicon.png", width: 1200, height: 630, alt: t("siteName") }],
+      images: [{ url: ogImagePath(locale), ...OG_IMAGE_SIZE, alt: t("ogImageAlt") }],
       locale: OG_LOCALE[locale] ?? "ko_KR",
     },
     twitter: {
       card: "summary_large_image",
       title: t("ogTitle"),
       description: t("ogDescription"),
-      images: ["/favicon.png"],
+      images: [ogImagePath(locale)],
     },
     robots: { index: true, follow: true },
   };
