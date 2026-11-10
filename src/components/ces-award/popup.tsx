@@ -2,7 +2,7 @@
 
 import { type ReactNode, type TouchEvent, useCallback, useEffect, useId, useRef, useState } from "react"
 import Image from "next/image"
-import { ArrowUpRight, X } from "lucide-react"
+import { ArrowUpRight, Check, X } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { CES_AWARD, isCesAwardActive } from "@/config/ces-award"
 
@@ -23,6 +23,8 @@ const br = () => (
 const b = (chunks: ReactNode) => (
   <strong className="font-semibold text-white">{chunks}</strong>
 )
+// 본문의 ®는 작은 위첨자 (제목의 ®는 원래 크기)
+const sup = (chunks: ReactNode) => <sup className="text-[0.6em] leading-none">{chunks}</sup>
 
 export default function CesAwardPopup() {
   const t = useTranslations("cesAward")
@@ -116,22 +118,22 @@ export default function CesAwardPopup() {
             }
           : undefined
       }
-      className={`fixed touch-none overscroll-contain sm:touch-auto inset-x-0 bottom-0 z-[999] overflow-hidden rounded-t-[20px] border border-white/10 bg-[#1B1F4E] pb-[env(safe-area-inset-bottom)] text-white shadow-[0_-12px_32px_-8px_rgba(8,10,36,0.5)] transition duration-300 ease-out motion-reduce:transition-none sm:inset-x-auto sm:bottom-8 sm:right-8 sm:w-[420px] sm:rounded-[20px] sm:pb-0 sm:shadow-[0_24px_48px_-12px_rgba(8,10,36,0.5),0_4px_12px_-2px_rgba(8,10,36,0.25)] ${
+      className={`fixed touch-none overscroll-contain sm:touch-auto inset-x-0 bottom-0 z-[999] overflow-hidden rounded-t-2xl bg-[#1B1F4E] pb-[env(safe-area-inset-bottom)] text-white shadow-[0_-8px_32px_-12px_rgba(8,10,36,0.55)] transition duration-300 ease-out motion-reduce:transition-none sm:inset-x-auto sm:bottom-8 sm:right-8 sm:w-[420px] sm:rounded-2xl sm:border sm:border-white/[0.06] sm:pb-0 sm:shadow-[0_16px_40px_-16px_rgba(8,10,36,0.55)] ${
         visible ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-6 opacity-0"
       }`}
     >
-      <div className="mx-auto mt-2.5 h-1 w-10 rounded-full bg-white/30 sm:hidden" aria-hidden="true" />
+      <div className="mx-auto mt-2 h-1 w-9 rounded-full bg-white/[0.22] sm:hidden" aria-hidden="true" />
 
       <button
         type="button"
         onClick={close}
         aria-label={t("closePopupAria")}
-        className="absolute right-1.5 top-2 flex size-11 items-center justify-center text-white/75 hover:text-white sm:top-1.5"
+        className="absolute right-1.5 top-2 flex size-11 items-center justify-center text-white/55 hover:text-white sm:top-1.5"
       >
-        <X className="size-[18px]" aria-hidden="true" />
+        <X className="size-4" strokeWidth={1.75} aria-hidden="true" />
       </button>
 
-      <div className="flex gap-4 px-5 pb-4 pt-[18px] sm:gap-[22px] sm:px-[26px] sm:pb-5 sm:pt-[26px]">
+      <div className="flex gap-4 px-5 pb-4 pt-[18px] sm:gap-[22px] sm:px-6 sm:pb-5 sm:pt-6">
         <Image
           src={CES_AWARD.badgeSrc}
           alt={t("badgeAlt")}
@@ -140,46 +142,54 @@ export default function CesAwardPopup() {
           sizes="104px"
           className="h-[100px] w-20 shrink-0 sm:h-[130px] sm:w-[104px]"
         />
-        <div className="flex flex-col gap-1.5 pr-6 sm:gap-2.5 sm:pr-5">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#8FD3F4] sm:text-xs">
+        <div className="flex flex-col gap-1.5 pr-6 sm:gap-2 sm:pr-5">
+          <p className="text-xs font-bold tracking-normal text-[#8FD3F4] sm:text-[13px]">
             {t("popupEyebrow")}
           </p>
-          <h2 id={titleId} className="break-keep text-xl font-bold leading-[1.3] sm:text-2xl">
+          <h2 id={titleId} className="break-keep text-xl font-bold leading-[1.3] tracking-[-0.02em] sm:text-2xl">
             {t.rich("popupTitle", { br })}
           </h2>
-          <p className="break-keep text-[13px] leading-[1.55] text-white/80 sm:text-sm sm:leading-[1.6]">
-            {t.rich("popupDesc", { b })}
+          <p className="break-keep text-[13px] leading-[1.6] tracking-[-0.01em] text-white/[0.72] sm:text-sm sm:leading-[1.65]">
+            {t.rich("popupDesc", { b, sup })}
           </p>
         </div>
       </div>
 
-      <div className="px-5 pb-2 sm:px-[26px] sm:pb-5">
+      <div className="px-5 pb-1.5 sm:px-6 sm:pb-5">
         <a
           href={CES_AWARD.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex h-12 items-center justify-center gap-1.5 rounded-xl bg-white text-[15px] font-semibold text-[#1B1F4E] hover:opacity-90"
+          className="flex h-[46px] items-center justify-center gap-1 rounded-[10px] bg-white text-[15px] font-semibold tracking-[-0.01em] text-[#1B1F4E] hover:opacity-90"
         >
           {t("cta")}
-          <ArrowUpRight className="size-4" aria-hidden="true" />
+          <ArrowUpRight className="size-[15px]" strokeWidth={1.75} aria-hidden="true" />
           <span className="sr-only">{t("newTab")}</span>
         </a>
       </div>
 
-      <div className="flex items-center justify-between pb-3 pl-5 pr-2.5 sm:border-t sm:border-white/10 sm:py-1.5 sm:pl-[22px] sm:pr-3.5">
-        <label className="flex min-h-11 cursor-pointer items-center gap-2 text-[13px] text-white/80">
-          <input
-            type="checkbox"
-            checked={hideToday}
-            onChange={(e) => setHideToday(e.target.checked)}
-            className="size-4 accent-[#8FD3F4]"
-          />
+      <div className="flex items-center justify-between pb-1 pl-5 pr-2.5 sm:border-t sm:border-white/[0.08] sm:py-1 sm:pl-6 sm:pr-3.5">
+        <label className="flex min-h-11 cursor-pointer items-center gap-2 text-[13px] text-white/65">
+          {/* 남색 배경에 맞춘 커스텀 체크박스 (네이티브 input 유지 → 키보드/스크린리더 동작 그대로) */}
+          <span className="relative inline-flex size-3.5 shrink-0">
+            <input
+              type="checkbox"
+              checked={hideToday}
+              onChange={(e) => setHideToday(e.target.checked)}
+              className="peer size-3.5 cursor-pointer appearance-none rounded border-[1.5px] border-white/40 checked:border-white checked:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+            />
+            <Check
+              className="pointer-events-none absolute inset-0 m-auto size-2.5 text-[#1B1F4E] opacity-0 peer-checked:opacity-100"
+              strokeWidth={3}
+              aria-hidden="true"
+            />
+          </span>
           {t("hideToday")}
         </label>
         <button
           type="button"
           onClick={close}
-          className="min-h-11 px-2.5 text-[13px] text-white/80 hover:text-white"
+          className="min-h-11 px-2.5 text-[13px] text-white/65 hover:text-white"
         >
           {t("close")}
         </button>
