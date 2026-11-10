@@ -1,9 +1,9 @@
 // src/app/page.tsx
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
+import { buildPageMetadata } from "@/lib/seo";
 import Script from "next/script";
 import LandingClient from "./page.client";
-import { SITE_URL } from "@/config/site";
 
 export async function generateMetadata({
   params,
@@ -12,16 +12,13 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "metadata" });
-  const koUrl = SITE_URL;
-  const enUrl = `${SITE_URL}/en`;
-  return {
+  return buildPageMetadata({
+    locale,
+    path: "",
     title: t("homeTitle"),
     description: t("homeDescription"),
-    alternates: {
-      canonical: locale === "en" ? enUrl : koUrl,
-      languages: { ko: koUrl, en: enUrl },
-    },
-  };
+    ogTitle: t("ogTitle"),
+  });
 }
 
 export default async function Page({

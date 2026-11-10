@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { SITE_URL } from "@/config/site";
+import { buildPageMetadata } from "@/lib/seo";
 import CasesShowcase from "../_sections/cases/cases-showcase";
 
 export async function generateMetadata({
@@ -10,16 +10,12 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale });
-  const koUrl = `${SITE_URL}/cases`;
-  const enUrl = `${SITE_URL}/en/cases`;
-  return {
+  return buildPageMetadata({
+    locale,
+    path: `/cases`,
     title: t("nav.cases"),
     description: t("cases.metaDescription"),
-    alternates: {
-      canonical: locale === "en" ? enUrl : koUrl,
-      languages: { ko: koUrl, en: enUrl },
-    },
-  };
+  });
 }
 
 export default function UseCases() {

@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
-import { SITE_URL } from "@/config/site"
+import { buildPageMetadata } from "@/lib/seo"
 import { getNotice } from "@/sanity/lib/sanity"
 import NoticeDetailClient from "./page.client"
 
@@ -15,16 +15,12 @@ export async function generateMetadata({
   const t = await getTranslations({ locale })
   const item = await getNotice(id)
   const title = item?.title ?? t("ir.tabAnnouncement")
-  const koUrl = `${SITE_URL}/ir/notices/${id}`
-  const enUrl = `${SITE_URL}/en/ir/notices/${id}`
-  return {
+  return buildPageMetadata({
+    locale,
+    path: `/ir/notices/${id}`,
     title,
     description: t("metadata.description"),
-    alternates: {
-      canonical: locale === "en" ? enUrl : koUrl,
-      languages: { ko: koUrl, en: enUrl },
-    },
-  }
+  })
 }
 
 export default function Page() {
